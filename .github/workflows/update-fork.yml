@@ -1,0 +1,56 @@
+name: Update Forked Repository
+
+on:
+  workflow_dispatch: # Allows manual runs
+  schedule:
+    - cron: '0 2 * * *' # Runs every day at 2 AM UTC; adjust as needed
+
+jobs:
+  sync_with_upstream:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the forked repo
+      - name: Checkout forked repository
+        uses: actions/checkout@v3
+        with:
+          ref: main
+
+      # Step 2: Set up the git environment
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      # Step 3: Add the upstream repository as a remote
+      - name: Add upstream repository
+        run: |
+          git remote add upstream https://github.com/lllyasviel/stable-diffusion-webui-forge
+          git fetch upstream
+
+      # Step 4: Merge changes from the upstream main branch into the local main branch
+      - name: Sync source code from upstream
+        run: |
+          git checkout main
+          # Pull changes from the upstream's main branch
+          git merge upstream/main --allow-unrelated-histories --strategy-option theirs
+
+          # Move the updated source files to the source folder
+          mkdir -p source
+          rsync -av --exclude=config.json --exclude=Dockerfile --exclude=.env --exclude=README.md ./ ./source/
+
+          # Remove all files in the root, then restore config files
+          rm -rf !(source|config.json|Dockerfile|.env|README.md)
+
+      # Step 5: Commit the changes (if there are any)
+      - name: Commit changes
+        run: |
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Sync with upstream repository"
+          fi
+
+      # Step 6: Push the changes back to the forked repo
+      - name: Push changes
+        run: |
+          git push origin main
