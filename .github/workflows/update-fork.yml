@@ -22,30 +22,21 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      # Step 3: Add the upstream repository as a remote
-      - name: Add upstream repository
+      # Step 3: Remove the existing source folder to prepare for fresh clone
+      - name: Clean source folder
         run: |
-          git remote add upstream https://github.com/lllyasviel/stable-diffusion-webui-forge
-          git fetch upstream
-
-      # Step 4: Merge changes from the upstream main branch into the local main branch
-      - name: Sync source code from upstream
-        run: |
-          git checkout main
-          # Pull changes from the upstream's main branch
-          git merge upstream/main --allow-unrelated-histories --strategy-option theirs
-
-          # Move the updated source files to the source folder
+          rm -rf source
           mkdir -p source
-          rsync -av --exclude=config.json --exclude=Dockerfile --exclude=.env --exclude=README.md ./ ./source/
 
-          # Remove all files in the root, then restore config files
-          rm -rf !(source|config.json|Dockerfile|.env|README.md)
-
+      # Step 4: Clone the original repository into the source folder
+      - name: Clone upstream repository into source folder
+        run: |
+          git clone --depth 1 https://github.com/lllyasviel/stable-diffusion-webui-forge source
+          
       # Step 5: Commit the changes (if there are any)
       - name: Commit changes
         run: |
-          git add -A
+          git add source
           if ! git diff --cached --quiet; then
             git commit -m "Sync with upstream repository"
           fi
