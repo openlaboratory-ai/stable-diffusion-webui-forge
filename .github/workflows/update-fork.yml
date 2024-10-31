@@ -1,69 +1,58 @@
 name: Update Forked Repository
 
 on:
-  workflow_dispatch: # Allows manual runs
+  workflow_dispatch:
   schedule:
-    - cron: '0 2 * * *' # Runs every day at 2 AM UTC; adjust as needed
+    - cron: '0 2 * * *'
 
 jobs:
   sync_with_upstream:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the forked repo
+      # Step 1: Checkout the forked repo without modifying top-level files
       - name: Checkout forked repository
         uses: actions/checkout@v3
         with:
           ref: main
 
-      # Set up the git environment
-      - name: Set up Git
+      - name: Set up Git and add upstream remote
         run: |
           git config --global user.name "open-laboratory-official"
           git config --global user.email "team@openlaboratory.ai"
-
-      # Remove the existing src folder to prepare for fresh copy
-      - name: Clean src folder
-        run: |
-          rm -rf src
-          mkdir -p src
-
-      - name: Add upstream remote and fetch
-        run: |
           git remote add upstream https://github.com/lllyasviel/stable-diffusion-webui-forge.git
-          git fetch upstream main || exit 1
+          git fetch upstream main
 
-      # Clone the original repository outside the src folder
-      - name: Clone upstream repository
+      # Step 2: Advance commit history to match upstream without changing files
+      - name: Fast-forward main branch to match upstream
         run: |
-          git clone --depth 1 https://github.com/lllyasviel/stable-diffusion-webui-forge.git upstream-temp
+          git merge --ff-only upstream/main || echo "Already up to date with upstream"
 
-      # Copy files into the src folder
-      - name: Copy upstream files
+      # Step 3: Clone upstream repository into a temporary directory for src updates
+      - name: Clone upstream repository for src updates
         run: |
-          cp -r upstream-temp/* src/
-          rm -rf upstream-temp
+          git clone --depth 1 https://github.com/lllyasviel/stable-diffusion-webui-forge.git temp-upstream
 
-      # Commit the changes (if there are any)
+      # Step 4: Sync only src directory
+      - name: Sync upstream to src directory
+        run: |
+          rsync -a --delete temp-upstream/ src/
+
+      # Step 5: Clean up the temporary clone
+      - name: Remove temporary folder
+        run: rm -rf temp-upstream
+
+      # Step 6: Commit changes only if src directory has updates
       - name: Commit changes
         run: |
           git add src
           if ! git diff --cached --quiet; then
-            git commit -m "Sync with upstream repository"
+            git commit -m "Update src with latest upstream code"
           fi
 
-      # Create a dummy commit with upstream's latest hash to match history
-      - name: Dummy commit for history alignment
-        run: |
-          UPSTREAM_LATEST_DATE=$(git log -1 --format=%aD -n 1 --date=iso-strict temp-upstream)
-          if [ -n "$UPSTREAM_LATEST_DATE" ]; then
-            git commit --allow-empty -m "Align fork history" --date "$UPSTREAM_LATEST_DATE"
-          fi
-
-      # Push the changes back to the forked repo
+      # Step 7: Push changes to the forked repository
       - name: Push changes
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/underhill-ai/stable-diffusion-webui-forge.git
-          git push origin main --force
+          git push origin main
