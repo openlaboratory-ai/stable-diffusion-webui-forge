@@ -28,6 +28,11 @@ jobs:
           rm -rf src
           mkdir -p src
 
+      - name: Add upstream remote and fetch
+        run: |
+          git remote add upstream https://github.com/lllyasviel/stable-diffusion-webui-forge.git
+          git fetch upstream main || exit 1
+          
       # Clone the original repository outside the src folder
       - name: Clone upstream repository
         run: |
