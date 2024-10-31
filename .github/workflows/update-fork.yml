@@ -10,36 +10,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the forked repo
-      - name: Checkout forked repository
-        uses: actions/checkout@v3
-        with:
-          ref: main
-
-      # Step 2: Set up the git environment
+      # Set up the git environment
       - name: Set up Git
         run: |
           git config --global user.name "open-laboratory-official"
           git config --global user.email "team@openlaboratory.ai"
 
-      # Step 3: Remove the existing src folder to prepare for fresh copy
+      # Remove the existing src folder to prepare for fresh copy
       - name: Clean src folder
         run: |
           rm -rf src
           mkdir -p src
 
-      # Step 4: Clone the original repository outside the src folder
+      # Clone the original repository outside the src folder
       - name: Clone upstream repository
         run: |
           git clone --depth 1 https://github.com/lllyasviel/stable-diffusion-webui-forge.git upstream-temp
 
-      # Step 5: Copy files into the src folder
+      # Copy files into the src folder
       - name: Copy upstream files
         run: |
           cp -r upstream-temp/* src/
           rm -rf upstream-temp
 
-      # Step 6: Commit the changes (if there are any)
+      # Commit the changes (if there are any)
       - name: Commit changes
         run: |
           git add src
@@ -47,7 +41,7 @@ jobs:
             git commit -m "Sync with upstream repository"
           fi
 
-      # Step 7: Push the changes back to the forked repo
+      # Push the changes back to the forked repo
       - name: Push changes
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
