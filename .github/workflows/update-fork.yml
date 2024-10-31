@@ -52,12 +52,13 @@ jobs:
             git commit -m "Sync with upstream repository"
           fi
 
-      # Step 8: Create a dummy commit with upstream's latest hash to match history
-      - name: Dummy commit to sync history
+      # Create a dummy commit with upstream's latest hash to match history
+      - name: Dummy commit for history alignment
         run: |
-          UPSTREAM_LATEST_COMMIT=$(git rev-parse upstream/main)
-          git commit --allow-empty -m "Sync fork with upstream history" --date "$(git log -1 --format=%aD $UPSTREAM_LATEST_COMMIT)"
-          git reset --soft $UPSTREAM_LATEST_COMMIT
+          UPSTREAM_LATEST_DATE=$(git log -1 --format=%aD -n 1 --date=iso-strict temp-upstream)
+          if [ -n "$UPSTREAM_LATEST_DATE" ]; then
+            git commit --allow-empty -m "Align fork history" --date "$UPSTREAM_LATEST_DATE"
+          fi
 
       # Push the changes back to the forked repo
       - name: Push changes
