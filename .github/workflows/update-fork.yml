@@ -43,5 +43,8 @@ jobs:
 
       # Step 6: Push the changes back to the forked repo
       - name: Push changes
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/underhill-ai/stable-diffusion-webui-forge.git
           git push origin main
