@@ -1,0 +1,26 @@
+{
+    "title": "Stable Diffusion Web UI Forge",
+    "github": "lllyasviel/stable-diffusion-webui-forge",
+    "startupScript": "scripts/start.sh",
+    "setupScripts": [
+      "scripts/setup.sh",
+      "scripts/download_model.sh"
+    ],
+    "workingDirectory": "/workspace/stable-diffusion-webui-forge",
+    "venvName": "venv",
+    "envVars": [
+      {
+        "envVar": "SD_WEBUI_FORGE_PORT",
+        "value": 8080
+      },
+      {
+        "envVar": "APP_VERSION",
+        "value": "main"
+      },
+      {
+        "envVar": "INITIAL_MODEL_DL_URL", 
+        "value": "https://civitai.com/api/download/models/128713?type=Model&format=SafeTensor&size=pruned&fp=fp16"
+      }
+    ]
+  }
+  
