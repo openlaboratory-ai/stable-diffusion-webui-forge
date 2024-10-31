@@ -22,19 +22,24 @@ jobs:
           git config --global user.name "open-laboratory-official"
           git config --global user.email "team@openlaboratory.ai"
 
-      # Step 3: Remove the existing source folder to prepare for fresh clone
+      # Step 3: Remove the existing source folder to prepare for fresh copy
       - name: Clean source folder
         run: |
           rm -rf source
           mkdir -p source
 
-      # Step 4: Clone the original repository into the source folder
-      - name: Clone upstream repository into source folder
+      # Step 4: Clone the original repository outside the source folder
+      - name: Clone upstream repository
         run: |
-          git clone --depth 1 https://github.com/lllyasviel/stable-diffusion-webui-forge.git source
-          
-          
-      # Step 5: Commit the changes (if there are any)
+          git clone --depth 1 https://github.com/lllyasviel/stable-diffusion-webui-forge.git upstream-temp
+
+      # Step 5: Copy files into the source folder
+      - name: Copy upstream files
+        run: |
+          cp -r upstream-temp/* source/
+          rm -rf upstream-temp
+
+      # Step 6: Commit the changes (if there are any)
       - name: Commit changes
         run: |
           git add source
@@ -42,7 +47,7 @@ jobs:
             git commit -m "Sync with upstream repository"
           fi
 
-      # Step 6: Push the changes back to the forked repo
+      # Step 7: Push the changes back to the forked repo
       - name: Push changes
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
