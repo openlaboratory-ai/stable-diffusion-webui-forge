@@ -31,7 +31,8 @@ jobs:
       # Step 4: Clone the original repository into the source folder
       - name: Clone upstream repository into source folder
         run: |
-          git clone --depth 1 https://github.com/lllyasviel/stable-diffusion-webui-forge source
+          git clone --depth 1 https://github.com/lllyasviel/stable-diffusion-webui-forge.git source
+          
           
       # Step 5: Commit the changes (if there are any)
       - name: Commit changes
