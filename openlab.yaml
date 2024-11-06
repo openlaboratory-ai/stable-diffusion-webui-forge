@@ -1,0 +1,45 @@
+# docker/community/demo/config/openlab.yaml
+---
+# Metadata
+appId: stable-diffusion-webui-forge
+source: illyasevel/stable-diffusion-webui-forge
+
+# Local paths to app setup and startup bash scripts.
+scripts:
+  setup:
+    - scripts/setup.sh
+    - scripts/download_model.sh
+  start: scripts/start.sh
+
+# Automatically clone the repository and setup venv/conda env prior to running setup scripts.
+# This downloads and runs the "initialize" script from open source Open Laboratory repo here - XXX
+autoInitialize: true
+
+# Automatically activates the venv/conda env prior to running each setup and start script.
+autoActivateEnvBeforeEachStep: true
+
+# Sets to APP_REPO env var.
+appRepository: https://github.com/lllyasviel/stable-diffusion-webui-forge
+
+# Sets APP_VERSION env var.
+appVersion: main
+
+# Sets to APP_DIRECTORY env var.
+appDirectory: /workspace/stable-diffusion-webui-forge
+
+# Sets env vars for exposed UI/API ports
+ports:
+  - port: 8080
+    envVar: SD_WEBUI_FORGE_PORT
+    type: WEB_UI
+
+# (Optional) Python environment settings
+python:
+  environment: venv  # [ venv, conda, none ], defaults to none
+
+# (Optional) Additional app-specific ENV vars.
+additionalOptions:
+  - envVar: INITIAL_MODEL_DL_URL
+    default: https://civitai.com/api/download/models/128713?type=Model&format=SafeTensor&size=pruned&fp=fp16
+    description: "The URL to download the initial model from. (Default: SD 1.5 Dreamshaper)"
+    

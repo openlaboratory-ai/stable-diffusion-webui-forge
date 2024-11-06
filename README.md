@@ -24,7 +24,7 @@ Must have docker and nvidia-container-toolkit installed.
 docker run -d \
   --name openlaboratory \
   -p 8080:8080 \
-  -e app=openlaboratory/stable-diffusion-webui-forge \
+  -e appRepo=https://github.com/openlaboratory/stable-diffusion-webui-forge.git \
   --gpus all \
   openlaboratory/community
 ```
