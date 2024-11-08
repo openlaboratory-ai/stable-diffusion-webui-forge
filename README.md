@@ -34,7 +34,7 @@ Run `docker run --rm --gpus all nvcr.io/nvidia/cuda:12.1.1-base-ubuntu22.04 nvid
 - In order to boot, this app must download a model before starting.  This is done as a setup step - the default model is Dreamshaper SD 1.5, and can be customized in the openlab.yaml configuration.
 
 
-### Docker
+### Docker (Recommended)
 
 Pull and run the image from Docker Hub.
 
@@ -46,14 +46,6 @@ docker run -d \
 ```
 
 Open http://localhost:8080 in your browser to access the app.
-
-### Docker Compose
-
-Utilize the included `docker-compose.yml` configuration to easily re-use and customize the launch settings.
-
-```bash
-docker-compose up -d
-```
 
 ### Local Container Build
 
@@ -69,6 +61,15 @@ docker run -d \
   --gpus all \
   local/stable-diffusion-webui-forge
 ```
+
+### Docker Compose
+
+Utilize the included `docker-compose.yml` configuration to easily re-use and customize the launch settings.
+
+```bash
+docker-compose up -d
+```
+
 
 ### Build Variables
 
