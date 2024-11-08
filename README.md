@@ -1,9 +1,7 @@
 # stable-diffusion-webui-forge
-Simple and portable installation configuration for illyasevel/stable-diffusion-webui-forge.
+Simple and portable installation configuration for [illyasevel/stable-diffusion-webui-forge](https://github.com/lllyasviel/stable-diffusion-webui-forge).
 
-## Usage Notes
-
-- In order to boot, this app must download a model before starting.  This is done as a setup step - the default model is Dreamshaper SD 1.5, and can be customized in the openlab.yaml configuration.
+Uses [labkit](https://github.com/underhill-ai/labkit) to install and run the application within a GPU-enabled Docker container, see the `openlab.yaml` file for additional installation and customization options.
 
 
 ## Deploy On Cloud
@@ -11,6 +9,16 @@ Simple and portable installation configuration for illyasevel/stable-diffusion-w
 Run this app within a cloud GPU labstation.
 
 https://openlaboratory.ai/apps/stable-diffusion-webui-forge
+
+## Usage
+
+- Access the web UI (port `8080` by default) to run a multitude of highly configurable text-to-image and image-to-image generation tasks.
+- In order to boot, this app must download a model before starting.  This is done as a setup step - the default model is Dreamshaper SD 1.5, and can be customized in the openlab.yaml configuration.
+
+![Stable Diffusion WebUI Forge](https://localbarn.openlaboratory.ai/_next/image?url=%2Fapps%2Fstable-diffusion-webui%2Ft2i.png&w=3840&q=75)
+![Stable Diffusion WebUI Forge 2](https://localbarn.openlaboratory.ai/_next/image?url=%2Fapps%2Fstable-diffusion-webui%2Fcontrolnet.png&w=3840&q=75)
+![Stable Diffusion WebUI Forge 3](https://localbarn.openlaboratory.ai/_next/image?url=%2Fapps%2Fstable-diffusion-webui%2Finpainting.png&w=3840&q=75)
+![Stable Diffusion WebUI Forge 4](https://localbarn.openlaboratory.ai/_next/image?url=%2Fapps%2Fstable-diffusion-webui%2Fextensions.png&w=3840&q=75)
 
 ## Run App Locally
 
