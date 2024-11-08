@@ -3,23 +3,17 @@ Simple, portable, open-source installation configuration for [illyasevel/stable-
 
 Uses [labkit](https://github.com/underhill-ai/labkit) to install and run the application within a GPU-enabled Docker container, see the `openlab.yaml` file for additional installation and customization options.
 
-
-![Stable Diffusion WebUI Forge](https://localbarn.openlaboratory.ai/_next/image?url=%2Fapps%2Fstable-diffusion-webui%2Ft2i.png&w=3840&q=75)
-![Stable Diffusion WebUI Forge 2](https://localbarn.openlaboratory.ai/_next/image?url=%2Fapps%2Fstable-diffusion-webui%2Fcontrolnet.png&w=3840&q=75)
-![Stable Diffusion WebUI Forge 3](https://localbarn.openlaboratory.ai/_next/image?url=%2Fapps%2Fstable-diffusion-webui%2Finpainting.png&w=3840&q=75)
-![Stable Diffusion WebUI Forge 4](https://localbarn.openlaboratory.ai/_next/image?url=%2Fapps%2Fstable-diffusion-webui%2Fextensions.png&w=3840&q=75)
-
-## Deploy On Cloud
+## Deploy On Cloud GPU
 
 1-Click launch this app on a cloud GPU workstion with [OpenLaboratory](https://openlaboratory.ai)
 
 https://openlaboratory.ai/apps/stable-diffusion-webui-forge
 
-## Usage
 
-- Access the web UI (port `8080` by default) to run a multitude of highly configurable text-to-image and image-to-image generation tasks.
-- In order to boot, this app must download a model before starting.  This is done as a setup step - the default model is Dreamshaper SD 1.5, and can be customized in the openlab.yaml configuration.
-
+![Stable Diffusion WebUI Forge](https://localbarn.openlaboratory.ai/_next/image?url=%2Fapps%2Fstable-diffusion-webui%2Ft2i.png&w=3840&q=75)
+![Stable Diffusion WebUI Forge 2](https://localbarn.openlaboratory.ai/_next/image?url=%2Fapps%2Fstable-diffusion-webui%2Fcontrolnet.png&w=3840&q=75)
+![Stable Diffusion WebUI Forge 3](https://localbarn.openlaboratory.ai/_next/image?url=%2Fapps%2Fstable-diffusion-webui%2Finpainting.png&w=3840&q=75)
+![Stable Diffusion WebUI Forge 4](https://localbarn.openlaboratory.ai/_next/image?url=%2Fapps%2Fstable-diffusion-webui%2Fextensions.png&w=3840&q=75)
 
 ## Run App Locally
 
@@ -33,6 +27,12 @@ https://openlaboratory.ai/apps/stable-diffusion-webui-forge
 Ensure that Docker is properly configured to utilize the NVIDIA Container Toolkit before proceeding with the installation and running of the application.
 
 Run `docker run --rm --gpus all nvcr.io/nvidia/cuda:12.1.1-base-ubuntu22.04 nvidia-smi` to confirm - you should see output with the name of the connected GPU.
+
+## Usage
+
+- Access the web UI (port `8080` by default) to run a multitude of highly configurable text-to-image and image-to-image generation tasks.
+- In order to boot, this app must download a model before starting.  This is done as a setup step - the default model is Dreamshaper SD 1.5, and can be customized in the openlab.yaml configuration.
+
 
 ### Docker
 
