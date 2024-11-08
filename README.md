@@ -11,6 +11,7 @@ See the `openlab.yaml` file to view and customize the installation configuration
 
 https://openlaboratory.ai/apps/stable-diffusion-webui-forge
 
+## Screenshots
 
 ![Stable Diffusion WebUI Forge](https://localbarn.openlaboratory.ai/_next/image?url=%2Fapps%2Fstable-diffusion-webui%2Ft2i.png&w=3840&q=75)
 ![Stable Diffusion WebUI Forge 2](https://localbarn.openlaboratory.ai/_next/image?url=%2Fapps%2Fstable-diffusion-webui%2Fcontrolnet.png&w=3840&q=75)
@@ -72,19 +73,18 @@ Utilize the included `docker-compose.yml` configuration to easily re-use and cus
 docker-compose up -d
 ```
 
+### Build Args
 
-### Build Variables
-
-Customize app installation and configuration by setting these env vars on the docker container.
+Set as a `build_arg` when building the Docker container to override the default settings in `openlab.yaml`.
 
 | Variable | Description | Default |
 | --- | --- | --- |
 | INITIAL_MODEL_DL_URL | The URL to download the initial model from. | https://civitai.com/api/download/models/128713?type=Model&format=SafeTensor&size=pruned&fp=fp16 |
 
 
-### Runtime Variables
+### Runtime Environment Variables
 
-Customize app installation and configuration by setting these env vars on the docker container.
+Set as an environment variable when running the Dccker container to override the default settings in `openlab.yaml`.
 
 | Variable | Description | Default |
 | --- | --- | --- |
