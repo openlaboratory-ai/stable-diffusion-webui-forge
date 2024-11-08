@@ -1,9 +1,10 @@
 # stable-diffusion-webui-forge
 Simple and portable installation configuration for illyasevel/stable-diffusion-webui-forge.
 
-## Important Notes
+## Usage Notes
 
-- Must download a model in order to start.
+- In order to boot, this app must download a model before starting.  This is done as a setup step - the default model is Dreamshaper SD 1.5, and can be customized in the openlab.yaml configuration.
+
 
 ## Deploy On Cloud
 
@@ -15,10 +16,14 @@ https://openlaboratory.ai/apps/stable-diffusion-webui-forge
 
 ### Dependencies
 
-- Docker
-- NVIDIA Container Toolkit
+- [NVIDIA GPU](https://developer.nvidia.com/cuda-gpus)
+- [NVIDIA CUDA 12.1.1+](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/)
+- [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)
+- [Docker](https://docs.docker.com/engine/install/)
 
-Ensure that both Docker and NVIDIA Container Toolkit are properly installed on your system before proceeding with the installation and running of the application.
+Ensure that Docker is properly configured to utilize the NVIDIA Container Toolkit before proceeding with the installation and running of the application.
+
+Run `docker run --rm --gpus all nvcr.io/nvidia/cuda:12.1.1-base-ubuntu22.04 nvidia-smi` to confirm - you should see output with the name of the connected GPU.
 
 ### Docker
 
@@ -30,6 +35,8 @@ docker run -d \
   --gpus all \
   openlaboratory/stable-diffusion-webui-forge
 ```
+
+Open http://localhost:8080 in your browser to access the app.
 
 ### Docker Compose
 

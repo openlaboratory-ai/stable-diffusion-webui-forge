@@ -1,7 +1,12 @@
 version: '3'
 services:
   openlaboratory:
-    image: openlaboratory/community
+    # Option 1: Pull the pre-built app container
+    image: openlaboratory/stable-diffusion-webui-forge
+    # Option 2: Build the app container locally
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
     ports:
       - "8080:8080"
     deploy:
