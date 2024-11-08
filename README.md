@@ -1,11 +1,13 @@
 # stable-diffusion-webui-forge
 Simple, portable, open-source installation configuration for [illyasevel/stable-diffusion-webui-forge](https://github.com/lllyasviel/stable-diffusion-webui-forge).
 
-Uses [labkit](https://github.com/underhill-ai/labkit) to install and run the application within a GPU-enabled Docker container, see the `openlab.yaml` file for additional installation and customization options.
+Uses [labkit](https://github.com/underhill-ai/labkit) to install and run the application within a GPU-enabled Docker container.
 
-## Deploy On Cloud GPU
+See the `openlab.yaml` file to view and customize the installation configuration.
 
-1-Click launch this app on a cloud GPU workstion with [OpenLaboratory](https://openlaboratory.ai)
+## Run On Cloud
+
+1-click launch this app on a cloud GPU workstion with [OpenLaboratory](https://openlaboratory.ai).
 
 https://openlaboratory.ai/apps/stable-diffusion-webui-forge
 
